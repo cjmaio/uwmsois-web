@@ -1,27 +1,12 @@
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-
-}
-
 body {
-    height: calc(100% - 20px);
-    margin: 0;
-    padding: 0;
-}
-
-main {
     height: 100%;
 }
 
 article {
-    margin: 20px;
     column-count: 3;
     column-gap: 50px;
     border: 1px solid #000000;
     padding: 20px;
-    height: 90%;
 }
 
 article p {
