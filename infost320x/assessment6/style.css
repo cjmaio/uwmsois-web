@@ -1,0 +1,135 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 40px;
+}
+
+#scene {
+  border-bottom: 2px solid #000000;
+  height: 400px;
+  padding: 20px;
+  position: relative;
+  width: calc(100% - 40px);
+}
+
+h1 {
+  -webkit-transition: all 3s ease-in-out;
+  font-size: 32px;
+  transition: all 3s ease-in-out;
+  color: black;
+  position: absolute;
+  top: 0;
+}
+
+h1:hover {
+  -webkit-transition: all 3s ease-in-out;
+  font-size: 48px;
+  transition: all 3s ease-in-out;
+  color: red;
+  position: absolute;
+  top: 0;
+}
+
+@keyframes bouncingball {
+  0% {
+    -webkit-transform: rotate(0deg);
+    color: #ffa600;
+    left: 0%;
+    top: 0%;
+    transform: rotate(0deg);
+  }
+  10% {
+    -webkit-transform: rotate(20deg);
+    color: #ffbd00;
+    font-size: 70px;
+    left: 2%;
+    top: 80%;
+    transform: rotate(20deg);
+  }
+  20% {
+    -webkit-transform: rotate(60deg);
+    color: rgb(97, 247, 97);
+    left: 15%;
+    top: 10%;
+    transform: rotate(60deg);
+  }
+  30% {
+    -webkit-transform: rotate(90deg);
+    color: rgb(105, 142, 237);
+    font-size: 70px;
+    left: 25%;
+    top: 80%;
+    transform: rotate(90deg);
+  }
+  40% {
+    -webkit-transform: rotate(150deg);
+    color: rgb(171, 72, 237);
+    left: 35%;
+    top: 20%;
+    transform: rotate(150deg);
+  }
+  50% {
+    -webkit-transform: rotate(190deg);
+    color: #ffa600;
+    font-size: 70px;
+    left: 45%;
+    top: 80%;
+    transform: rotate(190deg);
+  }
+  60% {
+    -webkit-transform: rotate(250deg);
+    color: #ffbd00;
+    left: 55%;
+    top: 30%;
+    transform: rotate(250deg);
+  }
+  70% {
+    -webkit-transform: rotate(290deg);
+    color: rgb(97, 247, 97);
+    font-size: 70px;
+    left: 65%;
+    top: 80%;
+    transform: rotate(290deg);
+  }
+  80% {
+    -webkit-transform: rotate(320deg);
+    color: rgb(105, 142, 237);
+    left: 75%;
+    top: 40%;
+    transform: rotate(320deg);
+  }
+  90% {
+    -webkit-transform: rotate(360deg);
+    color: rgb(105, 142, 237);
+    font-size: 70px;
+    left: 80%;
+    top: 80%;
+    transform: rotate(360deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    color: rgb(171, 72, 237);
+    left: 0%;
+    top: 80%;
+    transform: rotate(0deg);
+  }
+}
+
+#ball {
+	transition-timing-function: cubic-bezier(0.950, 0.050, 0.795, 0.035);
+  -webkit-animation: bouncingball 10s infinite;
+  -webkit-transition-timing-function: cubic-bezier(0.950, 0.050, 0.795, 0.035);
+  align-items: center;
+  animation: bouncingball 10s infinite;
+  background-color: rgb(204, 50, 50);
+  border-radius: 100%;
+  display: flex;
+  font-size: 60px;
+  height: 100px;
+  justify-content: center;
+  position: relative;
+  width: 100px;
+}
