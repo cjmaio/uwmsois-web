@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<head>
+    <title>Assignment 2</title>
+    <style type=""text/css">
+        :root {
+            --background-color: #efefef;
+            --primary-color: #000000;
+            --secondary-color: #3d4046;
+            --tertiary-color: #d4d4d4;
+            --nav-color: #1d1f25;
+
+            --header-height: 120px;
+            --footer-height: 30px;
+            --nav-height: 50px;
+
+            --section-padding: 20px;
+        }
+
+        html {
+            height: 100%;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            align-items: center;
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            display: flex;
+            height: var(--header-height);
+            padding: 0 var(--section-padding);
+        }
+        header .title {
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        header .subtitle {
+            color: var(--tertiary-color);
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        nav {
+            align-items: center;
+            background-color: var(--nav-color);
+            display: flex;
+            padding: 0 var(--section-padding);
+            height: var(--nav-height);
+        }
+        nav a {
+            color: var(--tertiary-color);
+            margin-right: 20px;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+        nav a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+            transition: color 0.2s ease-in-out;
+        }
+
+        main {
+            padding: var(--section-padding);
+            background-color: var(--background-color);
+            color: var(--secondary-color);
+            display: block;
+            height: calc(100% - var(--header-height) - var(--footer-height) - var(--nav-height) - var(--section-padding) - var(--section-padding));
+        }
+
+        main section.videos {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: var(--section-padding);
+            row-gap: var(--section-padding);
+            margin-bottom: var(--section-padding);
+        }
+        main section.videos figure {
+            margin: 0;
+        }
+        main section.videos figure video {
+            width: 100%;
+        }
+
+        main section.audios {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: var(--section-padding);
+            row-gap: var(--section-padding);
+            margin-bottom: var(--section-padding);
+        }
+        main section.audios figure {
+            margin: 0;
+        }
+        main section.audios figure audio {
+            width: 100%;
+        }
+
+        main section.audios figure figcaption {
+            padding-top: 5px;
+            text-align: center;
+        }
+
+        footer {
+            align-items: center;
+            background-color: var(--tertiary-color);
+            color: var(--secondary-color);
+            display: flex;
+            font-size: 0.75rem;
+            height: var(--footer-height);
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead-container">
+            <h1 class="title">Cats, cats, and more cats</h1>
+            <div class="subtitle">A website dedicated to our favorite feline friends.</div>
+        </div>
+    </header>
+    <nav>
+        <a href="https://www.youtube.com/watch?v=aGUYConIIFQ" target="_blank">Cats (on YouTube)</a>
+        <a href="https://www.petfinder.com/search/cats-for-adoption/us/pa/pittsburgh/" target="_blank">Cats for Adoption</a>
+    </nav>
+    <main>
+        <h2>Video</h2>
+        <p>Here are some of our videos of cats. Check them out below.</p>
+        <section class="videos">
+            <figure>
+                <video controls>
+                    <source src="assets/pexels_videos_1481903_720p.mp4" type="video/mp4">
+                    <source src="assets/pexels_videos_1481903_720p.webm" type="video/webm">
+                    <source src="assets/pexels_videos_1481903_720p.ogv" type="video/ogg">
+                </video>
+                <figcaption>Video of a small kitten, getting some rest, and letting out some tiny meows.</figcaption>
+            </figure>
+            <figure>
+                <video controls>
+                    <source src="assets/pexels_videos_1481903_720p.mp4" type="video/mp4">
+                    <source src="assets/pexels_videos_1481903_720p.webm" type="video/webm">
+                    <source src="assets/pexels_videos_1481903_720p.ogv" type="video/ogg">
+                </video>
+                <figcaption>Video of a small kitten, getting some rest, and letting out some tiny meows.</figcaption>
+            </figure>
+            <figure>
+                <video controls>
+                    <source src="assets/pexels_videos_1481903_720p.mp4" type="video/mp4">
+                    <source src="assets/pexels_videos_1481903_720p.webm" type="video/webm">
+                    <source src="assets/pexels_videos_1481903_720p.ogv" type="video/ogg">
+                </video>
+                <figcaption>Video of a small kitten, getting some rest, and letting out some tiny meows.</figcaption>
+            </figure>
+        </section>
+
+        <h2>Audio</h2>
+        <p>Here are some of our audio clips of sounds that cats might make. Check them out below.</p>
+        <section class="audios">
+            <figure>
+                <audio controls>
+                    <source src="assets/kitten-meow-soundbible.mp3" type="audio/mpeg">
+                    <source src="assets/kitten-meow-soundbible.wav" type="audio/wav">
+                </audio>
+                <figcaption>Audio clip of a kitten meowing.</figcaption>
+            </figure>
+            <figure>
+                <audio controls>
+                    <source src="assets/kitten-meow-soundbible.mp3" type="audio/mpeg">
+                    <source src="assets/kitten-meow-soundbible.wav" type="audio/wav">
+                </audio>
+                <figcaption>Audio clip of a kitten meowing.</figcaption>
+            </figure>
+            <figure>
+                <audio controls>
+                    <source src="assets/kitten-meow-soundbible.mp3" type="audio/mpeg">
+                    <source src="assets/kitten-meow-soundbible.wav" type="audio/wav">
+                </audio>
+                <figcaption>Audio clip of a kitten meowing.</figcaption>
+            </figure>
+        </section>
+    </main>
+    <footer>
+        &copy; 2023 by Christopher Maio
+    </footer>
+</body>
+</html>
