@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<head>
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Font from Creative Cloud / Adobe -->
+    <link rel="stylesheet" href="https://use.typekit.net/eaa1hzh.css">
+
+    <!-- Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=Roboto:wght@900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <article>
+            <h2 class="history">History of CSS</h2>
+            <p>
+                Style sheets have existed in one form or another since the beginnings of <strong>Standard Generalized
+                Markup Language (SGML)</strong> in the 1980s. Cascading Style Sheets were developed as a means for
+                creating a consistent approach to providing style information for web documents.
+            </p>
+            <p>
+                As HTML grew, it came to encompass a wider variety of stylistic capabilities to meet the
+                demands of web developers. This evolution gave the designer more control over site appearance,
+                at the cost of more complex HTML. Variations in web browser implementations, such
+                as ViolaWWW and WorldWideWeb, made consistent site appearance difficult, and users had
+                less control over how web content was displayed. Robert Cailliau wanted to separate the
+                structure from the presentation. The ideal way would be to give the user different options and
+                transferring three different kinds of style sheets: one for printing, one for the presentation on the
+                screen and one for the editor feature.
+            </p>
+            <p>
+                To improve web presentation capabilities, nine different style sheet languages were proposed to
+                the World Wide Web Consortium's (W3C) www-style mailing list. Of the nine proposals, two
+                were chosen as the foundation for what became CSS: Cascading HTML Style Sheets (CHSS)
+                and Stream-based Style Sheet Proposal (SSP). CHSS, a language that has some resemblance to
+                today's CSS, was proposed by Håkon Wium Lie in October 1994. Bert Bos was working on a
+                browser called Argo, which used its own style sheet language called SSP. Lie and Yves Lafon
+                joined Dave Raggett to expand the Arena browser for supporting CSS as a testbed application for
+                the W3C. Lie and Bos worked together to develop the CSS standard (the 'H' was removed from
+                the name because these style sheets could also be applied to other markup languages besides
+                HTML).
+            </p>
+            <p>
+                Unlike existing style languages like DSSSL and FOSI, CSS allowed a document's style to be
+                influenced by multiple style sheets. One style sheet could inherit or "cascade" from another,
+                permitting a mixture of stylistic preferences controlled equally by the site designer and user.
+            </p>
+            <p>
+                Lie's proposal was presented at the "Mosaic and the Web" conference (later called WWW2)
+                in Chicago, Illinois in 1994, and again with Bert Bos in 1995. Around this time the W3C was
+                already being established, and took an interest in the development of CSS. It organized a
+                workshop toward that end chaired by Steven Pemberton. This resulted in W3C adding work on
+                CSS to the deliverables of the HTML editorial review board (ERB). Lie and Bos were the
+                primary technical staff on this aspect of the project, with additional members, including Thomas
+                Reardon of Microsoft, participating as well. In August 1996 Netscape Communication
+                Corporation presented an alternative style sheet language called JavaScript Style Sheets (JSSS).
+                The spec was never finished and is deprecated. By the end of 1996, CSS was ready to become
+                official, and the CSS level 1 Recommendation was published in December.
+            </p>
+            <p>
+                Development of HTML, CSS, and the DOM had all been taking place in one group, the HTML
+                Editorial Review Board (ERB). Early in 1997, the ERB was split into three working
+                groups: HTML Working group, chaired by Dan Connolly of W3C; DOM Working group,
+                chaired by Lauren Wood of SoftQuad; and CSS Working group, chaired by Chris Lilley of W3C.
+            </p>
+            <p>
+                The CSS Working Group began tackling issues that had not been addressed with CSS level 1,
+                resulting in the creation of CSS level 2 on November 4, 1997. It was published as a W3C
+                Recommendation on May 12, 1998. CSS level 3, which was started in 1998, is still under
+                development as of 2009.
+            </p>
+            <p>
+                In 2005 the CSS Working Groups decided to enforce the requirements for standards more
+                strictly. This meant that already published standards like CSS 2.1, CSS 3 Selectors and CSS 3
+                Text were pulled back from Candidate Recommendation to Working Draft level.
+            </p>
+            <h2 class="adoption">Difficulty with adoption</h2>
+            <p>
+                The CSS 1 specification was completed in 1996. Microsoft's Internet Explorer 3 was released in
+                that year, featuring some limited support for CSS. But it was more than three years before any
+                web browser achieved near-full implementation of the specification. Internet Explorer 5.0 for the
+                Macintosh, shipped in March 2000, was the first browser to have full (better than 99 percent)
+                CSS 1 support, surpassing Opera, which had been the leader since its introduction of CSS
+                support 15 months earlier. Other browsers followed soon afterwards, and many of them
+                additionally implemented parts of CSS 2. As of August 2010, no (finished) browser had fully
+                implemented CSS 2, with implementation levels varying (see Comparison of layout engines
+                (CSS)).
+            </p>
+            <p>
+                Even though early browsers such as Internet Explorer 3 and 4, and Netscape 4.x had support for
+                CSS, it was typically incomplete and had many bugs that prevented their implementations from
+                being usefully adopted.
+            </p>
+            <p>
+                When later 'version 5' browsers began to offer a fairly full implementation of CSS, they were still
+                incorrect in certain areas and were fraught with inconsistencies, bugs and other quirks. The
+                proliferation of such CSS-related inconsistencies and even the variation in feature support has
+                made it difficult for designers to achieve a consistent appearance across browsers and platforms.
+                Some authors resorted to workarounds such as CSS hacks and CSS filters.
+            </p>
+            <p>
+                Problems with browsers' patchy adoption of CSS, along with errata in the original specification,
+                led the W3C to revise the CSS 2 standard into CSS 2.1, which moved nearer to a working
+                snapshot of current CSS support in HTML browsers. Some CSS 2 properties that no browser
+                successfully implemented were dropped, and in a few cases, defined behaviors were changed to
+                bring the standard into line with the predominant existing implementations. CSS 2.1 became a
+                Candidate Recommendation on February 25, 2004, but CSS 2.1 was pulled back to Working
+                Draft status on June 13, 2005, and only returned to Candidate Recommendation status on July
+                19, 2007.
+            </p>
+            <p>
+                In the past, some web servers were configured to serve all documents with the filename
+                extension <code>.css</code> as mime type <code>application/x-pointplus</code> rather than <code>text/css</code>. At the time, there was a
+                software product on the market to convert PowerPoint files into Compact Slide Show files using
+                the <code>.css</code> extension.
+            </p>
+            <p class="source">
+                Source: Wikipedia (2023-09-09 05:33 PM EST)
+            </p>
+        </article>
+    </main>
+</body>
+</html>
