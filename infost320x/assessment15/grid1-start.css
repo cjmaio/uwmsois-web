@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+body{
+	background-color:#CACACA;
+	box-sizing: border-box;
+}
+#grid{
+	display: grid;
+	grid-template-columns:200px 700px;
+	grid-template-rows:120px 500px 40px;
+	width: 900px;
+	height: auto;
+	margin: 0.5em auto auto auto;
+}
+.cells{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+	text-align: center;
+	background-color:#fff;
+}
+h1{
+  font-family: 'Abel', sans-serif;
+  color: #303030;
+  font-size: 28px;
+}
+
+img{
+	max-width: 100%;
+	max-height: 100%;
+}
+.one{
+	grid-column-start: span 2;
+	grid-row-start: span 1;
+	border-bottom: 1px solid #000;
+}
+.two{
+
+
+}
+.two ul{
+	list-style-type: none;
+	text-align: left;
+}
+.two li{
+	margin: .3em;
+	font-size: 1.15em;
+}
+.two li a:link{
+	color: #990000;
+	text-decoration: none;
+}
+.two li a:visited{
+	color: #990000;
+	text-decoration: none;
+}
+.two li a:hover{
+	color:#000;
+	text-decoration: underline;
+}
+.two li a:active{
+	color: #990000;
+	text-decoration: underline;
+}
+.two li a:focus{
+	color:#000;
+	text-decoration: underline;
+}
+
+.three{
+	padding:.4em;
+	text-align: left;
+}
+.three p{
+	text-indent:1em;
+}
+.four{
+  grid-column-start: span 2;
+  grid-row-start: span 1;
+  grid-row-end: -1;
+  font-size: 0.85em;
+  color: #555;
+}
+
+@media (min-width: 760px) and (max-width: 900px) {
+  #grid{
+    grid-template-columns:160px 600px;
+    grid-template-rows:100px 500px 40px;
+    width: 760px;
+    margin: 0;
+  }
+  h1 {
+    margin-bottom: 0.25em;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 759px) {
+  #grid{
+    grid-template-columns:160px 400px;
+    grid-template-rows: 100px 60px 450px 30px;
+    width: 90%;
+    margin: 0;
+  }
+  .two {
+    grid-column: span 2;
+    grid-row: 2 / 3;
+    text-align: left;
+  }
+  .two li {
+    font-size: 1.05em;
+    display: inline-block;
+    margin: 0.2em;
+  }
+  .three {
+    grid-column: span 2;
+    grid-row: 3 / 4;
+    height: auto;
+  }
+  .four {
+    grid-column: span 2;
+    grid-row: span -1;
+  }
+  h1 {
+    margin-bottom: 0.25em;
+  }
+}
