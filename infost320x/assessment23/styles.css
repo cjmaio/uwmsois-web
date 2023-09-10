@@ -1,0 +1,41 @@
+html {
+  font-family: sans-serif;
+}
+
+table {
+  border: 1px solid gray;
+}
+
+table thead tr th {
+  font-weight: bold;
+  text-align: center;
+}
+
+table thead tr th {
+  background-color: rgb(240, 185, 107);
+}
+
+table thead tr th:nth-child(1) {
+  width: 120px;
+}
+
+table thead tr th:nth-child(2) {
+  width: 100px;
+}
+
+table tbody tr {
+  height: 25px;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: rgb(194, 127, 1);
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #ffbd00;
+}
+
+table tbody tr:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
