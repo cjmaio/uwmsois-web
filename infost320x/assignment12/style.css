@@ -52,6 +52,8 @@ nav ul {
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
+	flex-wrap: wrap;
+	word-break: break-all;
 }
 nav li {
 	margin:.2em;
@@ -115,22 +117,28 @@ aside{
    main content columns
 -----------------------------------------------------*/
 .left{
-	-webkit-flex:2;
-	 -ms-flex:2;
-	 flex:2;
+	-webkit-flex:1;
+	 -ms-flex:1;
+	 flex:1;
 	 padding:.5em;
+	 background-color: rgb(233, 233, 233);
+	 color: rgb(50, 50, 50);
 }
 .center{
-	-webkit-flex:2;
-	 -ms-flex:2;
-	 flex:2;
+	-webkit-flex:1;
+	 -ms-flex:1;
+	 flex:1;
 	 padding:.5em;
+	 background-color: rgb(201, 201, 201);
+	 color: rgb(75, 75, 75);
 }
 .right{
 	-webkit-flex:1;
 	 -ms-flex:1;
 	 flex:1;
 	 padding:.5em;
+	 background-color: rgb(66, 66, 66);
+	 color: rgb(214, 214, 214);
 }
 /* --------------------------------------------------
    footer
@@ -141,10 +149,34 @@ footer{
 	display: flex;
 	-webkit-justify-content:flex-end;
 	-ms-flex-pack: justify;
-	justify-content:flex-end;
+	justify-content: center;
 }
 .footer_info{
 	padding:.3em;
 	font-size:1.1em;
 }
-/* add media query for displays under 700 pixels in width */
+
+@media (max-width: 700px) {
+	#main_content {
+		flex-flow: column;
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+
+		padding-left: 15px;
+		padding-right: 15px;
+		column-gap: 15px;
+		row-gap: 10px
+
+	}
+	.links li {
+		margin: 0;
+	}
+	footer {
+		flex-direction: row;
+		flex-flow: row;
+		flex-wrap: wrap;
+	}
+}
