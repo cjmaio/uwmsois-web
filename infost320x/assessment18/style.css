@@ -1,0 +1,31 @@
+section.masthead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section.control-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+section.text-colors ul,
+section.background-colors ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+section.name-entry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section.name-entry form {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  column-gap: 10px;
+}
