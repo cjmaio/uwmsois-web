@@ -1,0 +1,76 @@
+.site {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 50px auto 50px;
+  grid-template-areas:
+    'header header header header header header header header header header header header'
+    'sidebar-left sidebar-left main-content main-content main-content main-content main-content main-content main-content main-content sidebar-right sidebar-right'
+    'footer footer footer footer footer footer footer footer footer footer footer footer';
+  height: 800px;
+  gap: 10px;
+}
+
+.header {
+	background-color: #f4f8b2;
+	grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.main-content {
+  background-color: #9a9a9a;
+  grid-area: main-content;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.sidebar-left {
+	background-color: #4babef;
+  grid-area: sidebar-left;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.sidebar-right {
+	background-color: #1fc3dc;
+  grid-area: sidebar-right;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.footer {
+	background-color: #fff1c1;
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+@media (max-width: 799px) {
+  .site {
+    height: 600px;
+    grid-template-rows: 50px auto 50px 50px;
+    grid-template-areas:
+    'header header header header header header header header header header header header'
+    'sidebar-left sidebar-left sidebar-left main-content main-content main-content main-content main-content main-content main-content main-content main-content'
+    'sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right sidebar-right'
+    'footer footer footer footer footer footer footer footer footer footer footer footer';
+  }
+  .sidebar-right {
+    align-items: center;
+  }
+}
