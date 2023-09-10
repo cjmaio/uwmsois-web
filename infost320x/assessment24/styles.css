@@ -1,0 +1,79 @@
+.uwm .char1,
+.uwm .char2,
+.uwm .char3 {
+  /*
+   * Hey, I used to work as a full time staff member for Student Affairs,
+   * this color code is burnt into my mind
+   */
+  color: #FFBD00;
+}
+
+.uwm .char4 {
+  color: #000000;
+}
+
+.uwm .char5 {
+  color: #111111;
+}
+
+.uwm .char6 {
+  color: #222222;
+}
+
+.uwm .char7 {
+  color: #333333;
+}
+
+.uwm .char8 {
+  color: #444444;
+}
+
+.uwm .char9 {
+  color: #555555;
+}
+
+.uwm .char10 {
+  color: #666666;
+}
+
+.uwm .char11 {
+  color: #777777;
+}
+
+.uwm .char12 {
+  color: #888888;
+}
+
+
+.bsist {
+  font-size: 15em;
+}
+
+.bsist .char1 {
+  color: #FF0000;
+}
+
+.bsist .char2 {
+  color: #FF7F00;
+  position: relative;
+  left: -5%;
+}
+
+.bsist .char3 {
+  color: #FFFF00;
+  text-shadow: rgba(100, 100, 0, 0.5) 4px 4px;
+}
+
+.bsist .char4 {
+  color: #00FF00;
+  text-shadow: rgba(0, 100, 0, 0.5) 4px 4px;
+  position: relative;
+  left: -1%;
+}
+
+.bsist .char5 {
+  color: #0000FF;
+  text-shadow: rgba(0, 0, 100, 0.5) 4px 4px;
+  position: relative;
+  left: -3%;
+}
