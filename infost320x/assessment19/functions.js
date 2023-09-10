@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Scale the image with id 'theImage' to the specified width, height, and border.
  * If width, height, or border is empty, the value is unset.

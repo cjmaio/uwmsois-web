@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   // Add listener to the `text_color` radio buttons
   document.getElementsByName('text_color').forEach((element) => {
