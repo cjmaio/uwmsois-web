@@ -1,0 +1,158 @@
+body {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+header {
+  background-color: rgb(0, 51, 68);
+  padding-top: 10px;
+}
+
+/* Styling for header */
+#title{
+	color:#FFF;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	text-shadow:2px 2.5px 1px #636363;
+	text-align: center;
+}
+
+nav {
+  background: #ededed;
+}
+
+nav ul {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;
+}
+
+nav li {
+	-webkit-align-items: center;
+	-ms-flex-pack: center;
+	align-items: center;
+	list-style:none;
+	margin:1em;
+}
+
+
+
+/* I was not sure what "5 different states" meant in the assignment. I did the 4 states we can
+target an anchor tag with (hover, active, visited, and link which is default). I also targeted
+a specific one of those links as the 5th / 6th state. Hope that works. */
+
+nav li a:link {
+  font-family: sans-serif;
+  color: #020202;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  color: #333333;
+  text-decoration: underline;
+}
+
+nav li a:active {
+  color: #FF0000;
+}
+
+nav li:visited {
+  color: #ffbd00;
+}
+
+nav li:nth-child(1) a {
+  font-weight: bold;
+}
+
+nav li:nth-child(5) a {
+  font-style: italic;
+}
+
+/*Styling for main section with 3 columns */
+#main{
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-direction:row;
+	-ms-flex-direction:row;
+	flex-direction:row;
+	width:90%;
+	margin-left: auto;
+	margin-right: auto;
+	justify-content: center;
+}
+.column1 {
+	-webkit-flex: 1;
+	-ms-flex:1;
+	flex:1;
+	padding:5px;
+	order: 3;
+}
+.column2 {
+	-webkit-flex: 2;
+	-ms-flex:2;
+	flex:2;
+	border-right:1px solid #5D5D5D;
+	padding:5px;
+	order: 2;
+}
+.column3 {
+	-webkit-flex: 1;
+	-ms-flex:1;
+	flex:1;
+	padding:5px;
+	order: 1;
+	border-right:1px solid #5D5D5D;
+}
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC1O4a0Ew.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+h2{
+	text-align:center;
+	text-decoration:underline;
+  font-family: 'Outfit';
+
+}
+footer{
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+footer .social {
+	display: flex;
+	flex-direction: row;
+	column-gap: 15px;
+}
+
+@media (min-width: 700px) and (max-width: 1000px) {
+	body {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 700px) {
+	#main {
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+	}
+	.column1, .column2, .column3 {
+		border: 0;
+		padding: 0;
+	}
+}
