@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>HTML 5 Video</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="player.js"></script>
+  <link href="player.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>Young man using a laptop... the best of stock videos</h1>
+  <figure class="player">
+    <video width="480" id="vid">
+      <source src="assets/young-man-laptop.mp4" type="video/mp4">
+      <source src="assets/young-man-laptop.ogv">
+      <source src="assets/young-man-laptop.webm">
+      Your browser does not support the video tag
+    </video>
+    <figcaption id="video_controls">
+      <div id="play_toggle" class="player-button">&#x23F5;</div>
+      <progress id="progress" min="0" max="100" value="0"></progress>
+      <div id="time">
+        <span id="current_time">00:00</span> /
+        <span id="duration">00:00</span>
+      </div>
+    </figcaption>
+    <caption>
+      This is a video of a young man using a laptop. It's a stock video... who knows where
+      I got it from. But it was royalty free! That is the important part of all of this.
+    </caption>
+  </figure>
+</body>
+
+</html>
