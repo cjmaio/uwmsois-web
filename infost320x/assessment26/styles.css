@@ -1,0 +1,50 @@
+html {
+  background-color: #ededed;
+  font-family: sans-serif;
+}
+
+.contact-icons {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+}
+
+.contact-icons a img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Added styling here to make the tabs a grid, equally spaced across */
+ul.ui-tabs-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Need to remove the :before element, otherwise it doesn't spread out nicely */
+ul::before {
+  display: none !important;
+}
+
+/* Ensured the tabs were flex positioned, aligned center, with a 100% width to cover the page. Also made the text uppercase */
+ul.ui-tabs-nav li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+/* Update the colors of the tabs to match UWM colors, #FFBD00 for lyfe */
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  border: 1px solid #9c7300;
+  background: #FFBD00;
+}
+
+#experience section:not(:last-child) {
+  border-bottom: 1px solid #000;
+}
