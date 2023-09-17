@@ -1,24 +1,7 @@
-from enum import Enum
+from credittrack.utils.types import CardType
 from datetime import datetime
 
-
-class AccountType(Enum):
-    """
-    Represents the type of account.
-    """
-    CREDIT_CARD = 1
-    LINE_OF_CREDIT = 2
-
-
-class CardType(Enum):
-    """
-    Represents the type of card.
-    """
-    VISA = 1
-    MASTERCARD = 2
-    AMERICAN_EXPRESS = 3
-    DISCOVER = 4
-    STORE = 5
+ACCOUNT_LIST_FORMAT = '{:<20} {:<15} {:<20} {:<20} {:<15}'
 
 
 class Account:
@@ -26,11 +9,11 @@ class Account:
     Represents a credit account, whether its a credit card or regular revolving
     line of credit that you can withdraw from.
     """
-    balance_last_updated_at: str
+    balance_last_updated_at: datetime
     balance: float
     company: str
     credit_limit: float
-    date_opened: str
+    date_opened: datetime
     interest_rate: float
     name: str
 
@@ -40,7 +23,7 @@ class Account:
         balance: float,
         company: str,
         credit_limit: float,
-        date_opened: str,
+        date_opened: datetime,
         interest_rate: float,
         name: str,
     ):
@@ -50,17 +33,25 @@ class Account:
         self.date_opened = date_opened
         self.interest_rate = interest_rate
         self.name = name
-        self.balance_last_updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.balance_last_updated_at = datetime.now()
 
     def __str__(self):
-        return '{} ({})'.format(self.name, self.company)
+        return ACCOUNT_LIST_FORMAT.format(
+            self.company,
+            self.name,
+            self.date_opened.strftime('%m-%d-%Y'),
+            '{}%'.format(self.interest_rate),
+            '${:,.2f}'.format(self.credit_limit),
+            '${:,.2f}'.format(self.balance),
+            self.balance_last_updated_at.strftime('%m-%d-%Y %H:%M')
+        )
 
     def update_balance(self, balance: float):
         """
         Updates the balance of the account.
         """
         self.balance = balance
-        self.balance_last_updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.balance_last_updated_at = datetime.now()
 
     def update_interest_rate(self, interest_rate: float):
         """

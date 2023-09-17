@@ -1,0 +1,2 @@
+class InputExit(Exception):
+    pass

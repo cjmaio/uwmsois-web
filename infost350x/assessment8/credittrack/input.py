@@ -1,20 +1,6 @@
-from enum import Enum
 from datetime import datetime
-
-
-class InputType(Enum):
-    """
-    Represents the type of input.
-    """
-    STRING = 1
-    FLOAT = 2
-    INT = 3
-    DATE = 4
-    OPTION = 5
-
-
-class InputExit(Exception):
-    pass
+from credittrack.utils.exceptions import InputExit
+from credittrack.utils.types import InputType
 
 
 def ask_for_confirm(message: str) -> bool:
@@ -32,9 +18,7 @@ def ask_for_confirm(message: str) -> bool:
         else:
             raise ValueError('Invalid confirmation input.')
     except ValueError:
-        print('Invalid confirmation input.')
-        print('Try again.')
-        print('')
+        print('! Invalid confirmation input. Please try again.\n')
         return ask_for_confirm(message)
 
 
@@ -50,7 +34,7 @@ def ask_for_input(thing_name: str, type: InputType, options: dict = None):
             for i in range(len(option_items)):
                 print('\t {} = {}'.format(option_items[i][0], i + 1))
 
-            thing_input = input('Choose an {} (or type "exit" to go back): '.format(thing_name))
+            thing_input = input('\nChoose an {} (or type "exit" to go back): '.format(thing_name))
 
             if thing_input == 'exit':
                 raise InputExit()
@@ -60,7 +44,7 @@ def ask_for_input(thing_name: str, type: InputType, options: dict = None):
 
             return option_items[int(thing_input) - 1][1]
         else:
-            thing_input = input('Enter {} (or type "exit" to go back): '.format(thing_name))
+            thing_input = input('\nEnter {} (or type "exit" to go back): '.format(thing_name))
             if thing_input == 'exit':
                 raise InputExit()
             elif type == InputType.STRING:
@@ -72,7 +56,5 @@ def ask_for_input(thing_name: str, type: InputType, options: dict = None):
             elif type == InputType.INT:
                 return int(thing_input)
     except ValueError:
-        print('Invalid {}.'.format(thing_name))
-        print('Try again.')
-        print('')
+        print('! Invalid {}. Please try again.\n'.format(thing_name))
         return ask_for_input(thing_name, type, options)

@@ -1,5 +1,7 @@
-from account import CreditCard, LineOfCredit, CardType, AccountType
-from input import InputType, ask_for_input, ask_for_confirm, InputExit
+from credittrack.account import CreditCard, LineOfCredit, ACCOUNT_LIST_FORMAT
+from credittrack.input import ask_for_input, ask_for_confirm
+from credittrack.utils.types import CardType, AccountType, InputType
+from credittrack.utils.exceptions import InputExit
 import pickle
 
 
@@ -79,6 +81,15 @@ class AccountManager:
         self.save()
 
     def list_accounts(self):
+        print(ACCOUNT_LIST_FORMAT.format(
+            'Company',
+            'Name',
+            'Date Opened',
+            'Interest Rate',
+            'Credit Limit',
+            'Balance',
+            'Balance Last Updated At'
+        ))
         for account in self.accounts:
             print(account)
 
