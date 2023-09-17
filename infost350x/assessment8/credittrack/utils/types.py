@@ -1,6 +1,20 @@
 from enum import Enum
 
 
+class SortType(Enum):
+    """
+    Represents the type of sort.
+    """
+    NAME = 1
+    BALANCE = 2
+    DATE_OPENED = 3
+    INTEREST_RATE = 4
+    CREDIT_LIMIT = 5
+    UTILIZATION = 6
+    AVAILABLE_CREDIT = 7
+    LAST_UPDATED_AT = 8
+
+
 class AccountType(Enum):
     """
     Represents the type of account.
