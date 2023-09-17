@@ -1,3 +1,3 @@
 #!/bin/bash
 
-PYTHONPATH=$(pwd)/credittrack python -m credittrack.core
+python tracker.py
