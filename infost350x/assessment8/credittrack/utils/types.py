@@ -5,6 +5,7 @@ class SortType(Enum):
     """
     Represents the type of sort.
     """
+
     NAME = 1
     BALANCE = 2
     DATE_OPENED = 3
@@ -19,6 +20,7 @@ class AccountType(Enum):
     """
     Represents the type of account.
     """
+
     CREDIT_CARD = 1
     LINE_OF_CREDIT = 2
 
@@ -27,6 +29,7 @@ class CardType(Enum):
     """
     Represents the type of card.
     """
+
     VISA = 1
     MASTERCARD = 2
     AMERICAN_EXPRESS = 3
@@ -38,6 +41,7 @@ class InputType(Enum):
     """
     Represents the type of input.
     """
+
     STRING = 1
     FLOAT = 2
     INT = 3

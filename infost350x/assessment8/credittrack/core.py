@@ -7,20 +7,20 @@ from credittrack.utils.exceptions import InputExit
 accountmanager = AccountManager()
 
 COMMANDS = {
-    'Add Account': accountmanager.add_account,
-    'Update Account': accountmanager.update_account,
-    'Remove Account': accountmanager.remove_account,
-    'List Accounts': accountmanager.list_accounts,
+    "Add Account": accountmanager.add_account,
+    "Update Account": accountmanager.update_account,
+    "Remove Account": accountmanager.remove_account,
+    "List Accounts": accountmanager.list_accounts,
 }
 
 
 def main():
-    print('CreditTrack v1.0.0\n')
+    print("CreditTrack v1.0.0\n")
 
     try:
         while True:
-            command = ask_for_input('Command', InputType.OPTION, COMMANDS)
+            command = ask_for_input("Command", InputType.OPTION, COMMANDS)
             command()
     except InputExit:
-        print('\nGoodbye!\n')
+        print("\nGoodbye!\n")
         exit(0)

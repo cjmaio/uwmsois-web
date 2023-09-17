@@ -1,4 +1,12 @@
 from datetime import datetime
+from credittrack.constants import (
+    SIMPLE_DATE_FORMAT_US,
+    SIMPLE_DATE_FORMAT_EU,
+    SIMPLE_DATE_FORMAT_ISO,
+    SIMPLE_DATE_FORMAT_US_SLASHES,
+    SIMPLE_DATE_FORMAT_EU_SLASHES,
+    SIMPLE_DATE_FORMAT_ISO_SLASHES,
+)
 from credittrack.utils.exceptions import InputExit
 from credittrack.utils.types import InputType
 
@@ -15,12 +23,12 @@ def parse_date_multi_format(date_string: str) -> datetime:
         ValueError: If the date string cannot be parsed.
     """
     attempts = [
-        '%Y-%m-%d',
-        '%Y/%m/%d',
-        '%m-%d-%Y',
-        '%m/%d/%Y',
-        '%d-%m/%Y',
-        '%d/%m/%Y',
+        SIMPLE_DATE_FORMAT_ISO,
+        SIMPLE_DATE_FORMAT_ISO_SLASHES,
+        SIMPLE_DATE_FORMAT_US,
+        SIMPLE_DATE_FORMAT_US_SLASHES,
+        SIMPLE_DATE_FORMAT_EU,
+        SIMPLE_DATE_FORMAT_EU_SLASHES,
     ]
 
     for attempt in attempts:
@@ -29,7 +37,11 @@ def parse_date_multi_format(date_string: str) -> datetime:
         except ValueError:
             pass
 
-    raise ValueError('Invalid date format. Must be one of the following: {}'.format(', '.join(attempts)))
+    raise ValueError(
+        "Invalid date format. Must be one of the following: {}".format(
+            ", ".join(attempts)
+        )
+    )
 
 
 def sanitize_numerical_input(input_value: str) -> str:
@@ -42,7 +54,7 @@ def sanitize_numerical_input(input_value: str) -> str:
         str: The sanitized input value.
     """
 
-    return ''.join(c for c in input_value if c.isdigit() or c == '.')
+    return "".join(c for c in input_value if c.isdigit() or c == ".")
 
 
 def ask_for_confirm(message: str) -> bool:
@@ -57,16 +69,16 @@ def ask_for_confirm(message: str) -> bool:
     """
 
     try:
-        confirm_input = input('{} (y/n): '.format(message))
+        confirm_input = input("{} (y/n): ".format(message))
 
-        if confirm_input == 'y':
+        if confirm_input == "y":
             return True
-        elif confirm_input == 'n':
+        elif confirm_input == "n":
             return False
         else:
-            raise ValueError('Invalid confirmation input.')
+            raise ValueError("Invalid confirmation input.")
     except ValueError:
-        print('\n\t! Invalid confirmation input. Please try again.\n')
+        print("\n\t! Invalid confirmation input. Please try again.\n")
         return ask_for_confirm(message)
 
 
@@ -86,14 +98,14 @@ def ask_for_input(name: str, type: InputType, options: dict = None):
 
     try:
         if type == InputType.OPTION:
-            print('Available {}s:'.format(name))
+            print("Available {}s:".format(name))
             option_items = list(options.items())
             for i in range(len(option_items)):
-                print('\t {} = {}'.format(option_items[i][0], i + 1))
+                print("\t {} = {}".format(option_items[i][0], i + 1))
 
             input_value = input('\nChoose {} (or "exit"): '.format(name))
 
-            if input_value == 'exit':
+            if input_value == "exit":
                 raise InputExit()
 
             if int(input_value) < 1 or int(input_value) > len(option_items):
@@ -102,7 +114,7 @@ def ask_for_input(name: str, type: InputType, options: dict = None):
             return option_items[int(input_value) - 1][1]
         else:
             input_value = input('Enter {} (or "exit"): '.format(name))
-            if input_value == 'exit':
+            if input_value == "exit":
                 raise InputExit()
             elif type == InputType.STRING:
                 return input_value
@@ -113,5 +125,5 @@ def ask_for_input(name: str, type: InputType, options: dict = None):
             elif type == InputType.INT:
                 return int(sanitize_numerical_input(input_value))
     except ValueError:
-        print('\n\t! Invalid input: {}\n'.format(input_value))
+        print("\n\t! Invalid input: {}\n".format(input_value))
         return ask_for_input(name, type, options)

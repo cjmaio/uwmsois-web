@@ -1,11 +1,12 @@
+from credittrack.constants import SIMPLE_DATE_FORMAT_US, FULL_DATE_FORMAT_US
 from datetime import datetime
 
 
 class Account:
     """
-    Represents a credit account, whether its a credit card or regular revolving
-    line of credit that you can withdraw from.
+    Represents a credit account.
     """
+
     balance_last_updated_at: datetime
     balance: float
     company: str
@@ -16,7 +17,7 @@ class Account:
 
     def __init__(
         self,
-        *,  # I want these all to be forced to be named arguments
+        *,
         balance: float,
         company: str,
         credit_limit: float,
@@ -32,19 +33,33 @@ class Account:
         self.name = name
         self.balance_last_updated_at = datetime.now()
 
-    def get_available_credit(self):
+    def __str__(self) -> str:
+        return "\n".join(
+            [
+                f"\t{self.company} {self.name}",
+                "",
+                f"\tDate Opened: {self.date_opened.strftime(SIMPLE_DATE_FORMAT_US)}",
+                f"\tLast Updated: {self.balance_last_updated_at.strftime(FULL_DATE_FORMAT_US)}",
+                "",
+                f"\tInterest Rate: {self.interest_rate:.2f}%",
+                f"\tBalance: ${self.balance:,.2f}",
+                f"\tCredit Limit: ${self.credit_limit:,.2f}",
+            ]
+        )
+
+    def get_available_credit(self) -> float:
         """
         Returns the available credit of the account.
         """
         return self.credit_limit - self.balance
 
-    def get_utilization(self):
+    def get_utilization(self) -> float:
         """
         Returns the utilization of the account.
         """
         return (self.balance / self.credit_limit) * 100
 
-    def get_monthly_interest(self):
+    def get_monthly_interest(self) -> float:
         """
         Returns the monthly interest of the account.
         """
