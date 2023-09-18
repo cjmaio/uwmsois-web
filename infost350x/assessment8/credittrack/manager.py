@@ -3,7 +3,7 @@ from credittrack.entities.account import Account
 from credittrack.entities.lineofcredit import LineOfCredit
 from credittrack.utils.input import ask_for_input, ask_for_confirm
 from credittrack.utils.types import CardType, AccountType, InputType, SortType
-from credittrack.utils.exceptions import InputExit
+from credittrack.utils.exceptions import InputExit, InputBack
 import pickle
 
 
@@ -95,8 +95,11 @@ class AccountManager:
             self.accounts.append(account)
             self.save()
             print("\n\tAccount added.\n")
+        except InputBack:
+             print("\n\tGoing back...\n")
         except InputExit:
-            print("\n\tCancelled, going back...\n")
+            print("\nGoodbye!\n")
+            exit(0)
 
     def list_accounts(self):
         """
@@ -201,8 +204,11 @@ class AccountManager:
                 except ValueError:
                     print("\n\tInvalid sort type, try again.\n")
                     continue
+        except InputBack:
+             print("\n\tGoing back...\n")
         except InputExit:
-            print("\n\tCancelled, going back...\n")
+            print("\nGoodbye!\n")
+            exit(0)
 
     def update_account(self):
         """
@@ -273,8 +279,11 @@ class AccountManager:
 
                 self.save()
                 print("\n\tAccount updated.\n")
+        except InputBack:
+             print("\n\tGoing back...\n")
         except InputExit:
-            print("\n\tCancelled, going back...\n")
+            print("\nGoodbye!\n")
+            exit(0)
 
     def remove_account(self):
         """
@@ -300,6 +309,9 @@ class AccountManager:
                 self.save()
                 print("\n\tAccount removed.\n")
             else:
-                raise InputExit()
+                raise InputBack()
+        except InputBack:
+             print("\n\tGoing back...\n")
         except InputExit:
-            print("\n\tCancelled, going back...\n")
+            print("\nGoodbye!\n")
+            exit(0)

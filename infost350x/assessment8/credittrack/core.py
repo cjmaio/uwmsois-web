@@ -1,7 +1,7 @@
 from credittrack.manager import AccountManager
 from credittrack.utils.input import ask_for_input
 from credittrack.utils.types import InputType
-from credittrack.utils.exceptions import InputExit
+from credittrack.utils.exceptions import InputBack, InputExit
 
 
 accountmanager = AccountManager()
@@ -19,8 +19,8 @@ def main():
 
     try:
         while True:
-            command = ask_for_input("Command", InputType.OPTION, COMMANDS)
+            command = ask_for_input("Command", InputType.OPTION, COMMANDS, allow_back=False)
             command()
-    except InputExit:
+    except (InputExit):
         print("\nGoodbye!\n")
         exit(0)
