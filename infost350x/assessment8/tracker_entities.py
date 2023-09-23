@@ -21,6 +21,7 @@ class Account:
         self,
         *,
         id: UUID = None,
+        balance_last_updated_at = None,
         balance: float,
         company: str,
         credit_limit: float,
@@ -30,12 +31,12 @@ class Account:
     ):
         self.id = UUID() if id is None else id
         self.balance = balance
+        self.balance_last_updated_at = balance_last_updated_at or datetime.now()
         self.company = company
         self.credit_limit = credit_limit
         self.date_opened = date_opened
         self.interest_rate = interest_rate
         self.name = name
-        self.balance_last_updated_at = datetime.now()
 
     def __str__(self) -> str:
         return "\n".join(

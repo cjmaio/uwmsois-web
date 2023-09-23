@@ -23,6 +23,7 @@ class AccountManager:
         # Set a common config boolean that we will use throughout this class
         self.use_mysql = self.config.getboolean("core", "use_mysql")
 
+        # If we are using a MySQL database, setup a connection to use
         if self.use_mysql:
             self.connection = pymysql.connect(
                 host=self.config.get("database", "host"),
@@ -33,13 +34,7 @@ class AccountManager:
                 cursorclass=pymysql.cursors.DictCursor,
             )
 
-            # TODO: need to do something for db setup
-            # cursor = self.connection.cursor()
-            # with open("schema.sql") as f:
-            #     sql = f.read()
-            #     cursor.execute(sql)
-            #     self.connection.commit()
-
+        # Setup an empty accounts list and load data from the database or pickle file
         self.accounts = []
         self.load()
 
@@ -70,8 +65,8 @@ class AccountManager:
                     at.account_type_name,
                     account_name,
                     company,
-                    created_at,
-                    last_updated_at,
+                    opened_at,
+                    balance_last_updated_at,
                     balance,
                     credit_limit,
                     interest_rate,
@@ -91,27 +86,29 @@ class AccountManager:
             for row in results:
                 if row["account_type_name"] == AccountType.CREDIT_CARD.name:
                     account = CreditCard(
-                        id=row["account_id"],
-                        name=row["account_name"],
-                        company=row["company"],
-                        date_opened=row["created_at"],
-                        credit_limit=row["credit_limit"],
-                        interest_rate=row["interest_rate"],
-                        balance=row["balance"],
-                        card_type=row["card_type_name"],
                         active_promotions=row["active_promotions"],
                         annual_fee=row["annual_fee"],
+                        balance_last_updated_at=row["balance_last_updated_at"],
+                        balance=row["balance"],
+                        card_type=CardType[row["card_type_name"]],
+                        company=row["company"],
+                        credit_limit=row["credit_limit"],
+                        date_opened=row["opened_at"],
+                        id=row["account_id"],
+                        interest_rate=row["interest_rate"],
+                        name=row["account_name"],
                         rewards=row["rewards"],
                     )
                 else:
                     account = LineOfCredit(
-                        id=row["account_id"],
-                        name=row["account_name"],
-                        company=row["company"],
-                        date_opened=row["created_at"],
-                        credit_limit=row["credit_limit"],
-                        interest_rate=row["interest_rate"],
+                        balance_last_updated_at=row["balance_last_updated_at"],
                         balance=row["balance"],
+                        company=row["company"],
+                        credit_limit=row["credit_limit"],
+                        date_opened=row["opened_at"],
+                        id=row["account_id"],
+                        interest_rate=row["interest_rate"],
+                        name=row["account_name"],
                     )
                 self.accounts.append(account)
         else:
@@ -122,6 +119,16 @@ class AccountManager:
                 pass
 
     def _insert(self, account: Account) -> bool:
+        """
+        Helper function to insert a new account into our local accounts list, as well as a MySQL database if configured.
+
+        Args:
+            account (Account): The account to insert.
+        Returns:
+            bool: True if the account was inserted, False if not.
+        Raises:
+            ValueError: If the account type is invalid.
+        """
         self.accounts.append(account)
 
         if self.use_mysql:
@@ -135,7 +142,6 @@ class AccountManager:
             else:
                 raise ValueError("Invalid account type.")
 
-            # TODO: should prob have a different field for date opened, balance last updated at
             sql = """
                 INSERT INTO account (
                     account_id,
@@ -145,31 +151,87 @@ class AccountManager:
                     company,
                     created_at,
                     last_updated_at,
+                    opened_at,
+                    balance_last_updated_at,
                     balance,
                     credit_limit,
                     interest_rate,
                     active_promotions,
                     annual_fee,
                     rewards
-                ) VALUES (%s, %s, %s, %s, %s, NOW(), NOW(), %s, %s, %s, %s, %s, %s)
+                ) VALUES (%s, %s, %s, %s, %s, NOW(), NOW(), %s, %s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(sql, (account.id, self.account_type_id_map[account_type], self.card_type_id_map.get(account.card_type.name), account.name, account.company, account.balance, account.credit_limit, account.interest_rate, account.active_promotions, account.annual_fee, account.rewards))
+            cursor.execute(sql, (
+                account.id,
+                self.account_type_id_map[account_type],
+                self.card_type_id_map.get(account.card_type.name),
+                account.name,
+                account.company,
+                account.date_opened,
+                account.balance_last_updated_at,
+                account.balance,
+                account.credit_limit,
+                account.interest_rate,
+                account.active_promotions,
+                account.annual_fee,
+                account.rewards,
+            ))
             self.connection.commit()
             return cursor.rowcount == 1
         else:
             self.save()
 
     def _update(self, account: Account) -> bool:
-        self.save()
-        pass
+        """
+        Helper function to update an account in our local accounts list, as well as a MySQL database if configured.
+
+        Args:
+            account (Account): The account to update.
+        Returns:
+            bool: True if the account was updated, False if not.
+        """
+        if self.use_mysql:
+            cursor = self.connection.cursor()
+            sql = """
+                UPDATE account
+                SET
+                    balance = %s,
+                    interest_rate = %s,
+                    credit_limit = %s,
+                    annual_fee = %s,
+                    active_promotions = %s,
+                    rewards = %s,
+                    last_updated_at = NOW()
+                WHERE account_id = %s
+            """
+            cursor.execute(sql, (
+                account.balance,
+                account.interest_rate,
+                account.credit_limit,
+                account.annual_fee,
+                account.active_promotions,
+                account.rewards,
+                account.id,
+            ))
+            self.connection.commit()
+            return cursor.rowcount == 1
+        else:
+            self.save()
 
     def _delete(self, account: Account) -> bool:
+        """
+        Helper function to delete an account from our local accounts list, as well as a MySQL database if configured.
+
+        Args:
+            account (Account): The account to delete.
+        Returns:
+            bool: True if the account was deleted, False if not.
+        """
         self.accounts.remove(account)
 
         if self.use_mysql:
             cursor = self.connection.cursor()
-            sql = "DELETE FROM account WHERE account_id = %s"
-            cursor.execute(sql, (account.id,))
+            cursor.execute("DELETE FROM account WHERE account_id = %s", (account.id,))
             self.connection.commit()
             return cursor.rowcount == 1
         else:
