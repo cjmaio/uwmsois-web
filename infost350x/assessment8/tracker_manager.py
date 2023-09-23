@@ -1,14 +1,45 @@
-from credittrack.entities.creditcard import CreditCard
-from credittrack.entities.account import Account
-from credittrack.entities.lineofcredit import LineOfCredit
-from credittrack.utils.input import ask_for_input, ask_for_confirm
-from credittrack.utils.types import CardType, AccountType, InputType, SortType
-from credittrack.utils.exceptions import InputExit, InputBack
+import configparser
 import pickle
+import pymysql
+import uuid
+
+from tracker_entities import Account, CreditCard, LineOfCredit
+from tracker_exceptions import InputExit, InputBack
+from tracker_input import ask_for_input, ask_for_confirm
+from tracker_types import CardType, AccountType, InputType, SortType
 
 
 class AccountManager:
+    account_type_id_map: dict = {}
+    card_type_id_map: dict = {}
+    config: configparser.ConfigParser
+    use_mysql: bool
+
     def __init__(self):
+        # Read our configuration from our config file
+        self.config = configparser.ConfigParser()
+        self.config.read("config.ini")
+
+        # Set a common config boolean that we will use throughout this class
+        self.use_mysql = self.config.getboolean("core", "use_mysql")
+
+        if self.use_mysql:
+            self.connection = pymysql.connect(
+                host=self.config.get("database", "host"),
+                port=self.config.getint("database", "port"),
+                user=self.config.get("database", "user"),
+                password=self.config.get("database", "password"),
+                database=self.config.get("database", "dbname"),
+                cursorclass=pymysql.cursors.DictCursor,
+            )
+
+            # TODO: need to do something for db setup
+            # cursor = self.connection.cursor()
+            # with open("schema.sql") as f:
+            #     sql = f.read()
+            #     cursor.execute(sql)
+            #     self.connection.commit()
+
         self.accounts = []
         self.load()
 
@@ -16,18 +47,141 @@ class AccountManager:
         """
         Loads the user's accounts from the accounts.pickle file (if exists).
         """
-        try:
-            with open("accounts.pickle", "rb") as f:
-                self.accounts = pickle.load(f)
-        except FileNotFoundError:
-            pass
+        if self.use_mysql:
+            cursor = self.connection.cursor()
+
+            # Load card type mapping
+            cursor.execute("SELECT card_type_id, card_type_name FROM card_type")
+            results = cursor.fetchall()
+            for row in results:
+                self.card_type_id_map[row["card_type_name"]] = row["card_type_id"]
+
+            # Load account type mapping
+            cursor.execute("SELECT account_type_id, account_type_name FROM account_type")
+            results = cursor.fetchall()
+            for row in results:
+                self.account_type_id_map[row["account_type_name"]] = row["account_type_id"]
+
+            # Load accounts
+            cursor.execute("""
+               SELECT
+                    account_id,
+                    ct.card_type_name,
+                    at.account_type_name,
+                    account_name,
+                    company,
+                    created_at,
+                    last_updated_at,
+                    balance,
+                    credit_limit,
+                    interest_rate,
+                    active_promotions,
+                    annual_fee,
+                    rewards
+                FROM account AS a
+                INNER JOIN account_type AS at
+                    ON a.account_type_id = at.account_type_id
+                INNER JOIN card_type AS ct
+                    ON a.card_type_id = ct.card_type_id
+                ORDER BY account_id ASC
+            """)
+
+            results = cursor.fetchall()
+
+            for row in results:
+                if row["account_type_name"] == AccountType.CREDIT_CARD.name:
+                    account = CreditCard(
+                        id=row["account_id"],
+                        name=row["account_name"],
+                        company=row["company"],
+                        date_opened=row["created_at"],
+                        credit_limit=row["credit_limit"],
+                        interest_rate=row["interest_rate"],
+                        balance=row["balance"],
+                        card_type=row["card_type_name"],
+                        active_promotions=row["active_promotions"],
+                        annual_fee=row["annual_fee"],
+                        rewards=row["rewards"],
+                    )
+                else:
+                    account = LineOfCredit(
+                        id=row["account_id"],
+                        name=row["account_name"],
+                        company=row["company"],
+                        date_opened=row["created_at"],
+                        credit_limit=row["credit_limit"],
+                        interest_rate=row["interest_rate"],
+                        balance=row["balance"],
+                    )
+                self.accounts.append(account)
+        else:
+            try:
+                with open("accounts.pickle", "rb") as f:
+                    self.accounts = pickle.load(f)
+            except FileNotFoundError:
+                pass
+
+    def _insert(self, account: Account) -> bool:
+        self.accounts.append(account)
+
+        if self.use_mysql:
+            cursor = self.connection.cursor()
+
+            account_type = None
+            if isinstance(account, CreditCard):
+                account_type = AccountType.CREDIT_CARD.name
+            elif isinstance(account, LineOfCredit):
+                account_type = AccountType.LINE_OF_CREDIT.name
+            else:
+                raise ValueError("Invalid account type.")
+
+            # TODO: should prob have a different field for date opened, balance last updated at
+            sql = """
+                INSERT INTO account (
+                    account_id,
+                    account_type_id,
+                    card_type_id,
+                    account_name,
+                    company,
+                    created_at,
+                    last_updated_at,
+                    balance,
+                    credit_limit,
+                    interest_rate,
+                    active_promotions,
+                    annual_fee,
+                    rewards
+                ) VALUES (%s, %s, %s, %s, %s, NOW(), NOW(), %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(sql, (account.id, self.account_type_id_map[account_type], self.card_type_id_map.get(account.card_type.name), account.name, account.company, account.balance, account.credit_limit, account.interest_rate, account.active_promotions, account.annual_fee, account.rewards))
+            self.connection.commit()
+            return cursor.rowcount == 1
+        else:
+            self.save()
+
+    def _update(self, account: Account) -> bool:
+        self.save()
+        pass
+
+    def _delete(self, account: Account) -> bool:
+        self.accounts.remove(account)
+
+        if self.use_mysql:
+            cursor = self.connection.cursor()
+            sql = "DELETE FROM account WHERE account_id = %s"
+            cursor.execute(sql, (account.id,))
+            self.connection.commit()
+            return cursor.rowcount == 1
+        else:
+            self.save()
 
     def save(self):
         """
-        Saves the user's accounts to the accounts.pickle file.
+        Saves the user's accounts to the accounts.pickle file if we're not using a MySQL backend.
         """
-        with open("accounts.pickle", "wb") as f:
-            pickle.dump(self.accounts, f)
+        if not self.use_mysql:
+            with open("accounts.pickle", "wb") as f:
+                pickle.dump(self.accounts, f)
 
     def add_account(self):
         """
@@ -64,6 +218,7 @@ class AccountManager:
             interest_rate = ask_for_input("Interest Rate", InputType.FLOAT)
             credit_limit = ask_for_input("Credit Limit", InputType.INT)
             balance = ask_for_input("Balance", InputType.FLOAT)
+            id = uuid.uuid4()
 
             if account_type == AccountType.CREDIT_CARD:
                 annual_fee = ask_for_input("Annual Fee", InputType.FLOAT)
@@ -71,6 +226,7 @@ class AccountManager:
                 rewards = ask_for_input("Rewards", InputType.STRING)
 
                 account = CreditCard(
+                    id=id,
                     name=name,
                     company=company,
                     date_opened=date_opened,
@@ -84,6 +240,7 @@ class AccountManager:
                 )
             else:
                 account = LineOfCredit(
+                    id=id,
                     name=name,
                     company=company,
                     date_opened=date_opened,
@@ -92,8 +249,8 @@ class AccountManager:
                     balance=balance,
                 )
 
-            self.accounts.append(account)
-            self.save()
+            self._insert(account)
+
             print("\n\tAccount added.\n")
         except InputBack:
              print("\n\tGoing back...\n")
@@ -277,7 +434,7 @@ class AccountManager:
                     rewards = ask_for_input("Rewards", InputType.STRING)
                     account.update_rewards(rewards)
 
-                self.save()
+                self._update(account)
                 print("\n\tAccount updated.\n")
         except InputBack:
              print("\n\tGoing back...\n")
@@ -305,8 +462,7 @@ class AccountManager:
             confirmed = ask_for_confirm("Are you sure you want to remove this account?")
 
             if confirmed:
-                self.accounts.remove(account)
-                self.save()
+                self._delete(account)
                 print("\n\tAccount removed.\n")
             else:
                 raise InputBack()

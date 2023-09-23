@@ -1,13 +1,30 @@
-import os
-import sys
-from credittrack.core import main
+from tracker_exceptions import InputExit
+from tracker_input import ask_for_input
+from tracker_manager import AccountManager
+from tracker_types import InputType
 
-# I wanted to be able to import my code as a "module" without installing it, as I was not sure
-# what environment you would be running this in. This is not the more elegant way to do this,
-# but it works. It also let me organize my code in a way that's closer to how I do it daily :)
-# https://www.geeksforgeeks.org/python-import-module-from-different-directory/
-current_directory = os.getcwd()
-sys.path.insert(0, '{}/credittrack'.format(current_directory))
+
+accountmanager = AccountManager()
+
+COMMANDS = {
+    "Add Account": accountmanager.add_account,
+    "Update Account": accountmanager.update_account,
+    "Remove Account": accountmanager.remove_account,
+    "List Accounts": accountmanager.list_accounts,
+}
+
+
+def main():
+    print("CreditTrack v1.0.0\n")
+
+    try:
+        while True:
+            command = ask_for_input("Command", InputType.OPTION, COMMANDS, allow_back=False)
+            command()
+    except (InputExit):
+        print("\nGoodbye!\n")
+        exit(0)
+
 
 if __name__ == "__main__":
     main()
