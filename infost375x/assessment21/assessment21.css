@@ -1,0 +1,13 @@
+#canvas1 {
+    outline: 3px solid #BB0000;
+    margin-bottom: 50px;
+}
+
+#canvas2 {
+    outline: 3px solid #00BB00;
+    margin-bottom: 50px;
+}
+
+#canvas3 {
+    outline: 3px solid #0000BB;
+}
