@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Electric Vehicle Reviews</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+  <script src="assessment11_advert3.js"></script>
+  <script>
+    var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+    function init() {
+      canvas = document.getElementById("canvas");
+      anim_container = document.getElementById("animation_container");
+      dom_overlay_container = document.getElementById("dom_overlay_container");
+      var comp = AdobeAn.getComposition("29F3FEB6DA9DEB4FBB92BCAB37E12E75");
+      var lib = comp.getLibrary();
+      var loader = new createjs.LoadQueue(false);
+      loader.addEventListener("fileload", function (evt) { handleFileLoad(evt, comp) });
+      loader.addEventListener("complete", function (evt) { handleComplete(evt, comp) });
+      var lib = comp.getLibrary();
+      loader.loadManifest(lib.properties.manifest);
+    }
+    function handleFileLoad(evt, comp) {
+      var images = comp.getImages();
+      if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }
+    }
+    function handleComplete(evt, comp) {
+      //This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+      var lib = comp.getLibrary();
+      var ss = comp.getSpriteSheet();
+      var queue = evt.target;
+      var ssMetadata = lib.ssMetadata;
+      for (i = 0; i < ssMetadata.length; i++) {
+        ss[ssMetadata[i].name] = new createjs.SpriteSheet({ "images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames })
+      }
+      exportRoot = new lib.assessment11_advert3();
+      stage = new lib.Stage(canvas);
+      stage.enableMouseOver();
+      //Registers the "tick" event listener.
+      fnStartAnimation = function () {
+        stage.addChild(exportRoot);
+        createjs.Ticker.framerate = lib.properties.fps;
+        createjs.Ticker.addEventListener("tick", stage);
+      }
+      //Code to support hidpi screens and responsive scaling.
+      AdobeAn.makeResponsive(false, 'both', false, 1, [canvas, anim_container, dom_overlay_container]);
+      AdobeAn.compositionLoaded(lib.properties.id);
+      fnStartAnimation();
+    }
+  </script>
+</head>
+
+<body onload="init();" style="margin:0px;">
+  <header>
+    <div class="masthead-container">
+      <h1 class="title">Electric Vehicle Reviews</h1>
+      <div class="subtitle">Electric vehicles are the future, we're here to help you navigate it.</div>
+    </div>
+  </header>
+  <nav>
+    <a href="#main">Home</a>
+    <a href="#news">News</a>
+    <a href="#about">About</a>
+  </nav>
+  <main>
+    <section class="core">
+      <section id="news">
+        <h2>News</h2>
+        <div class="news-article">
+          <img src="images/tesla-next-gen.jpg" alt="Electric Car">
+          <div>
+            <h2>Tesla Unveils Next-Generation Electric Vehicle</h2>
+            <p>Leading the charge in innovation, Tesla announced the release of their much-anticipated electric vehicle, promising groundbreaking enhancements in range, performance, and autonomous driving capabilities. The sleek design and advanced technology are set to redefine the electric car industry once again.</p>
+            <p><a href="#">Read more</a></p>
+          </div>
+      </div>
+
+      <div class="news-article">
+          <img src="images/charging-station-image.jpg" alt="Charging Station">
+          <div>
+            <h2>New Charging Stations Across the Country</h2>
+            <p>Electric vehicle owners nationwide can rejoice as a network of ultra-fast charging stations is set to be installed along major highways. The initiative aims to reduce charging times significantly, addressing a key concern among electric car enthusiasts and further promoting eco-friendly transportation.</p>
+            <p><a href="#">Read more</a></p>
+          </div>
+      </div>
+
+      <div class="news-article">
+          <img src="images/electric-suv-image.jpg" alt="Electric SUV">
+          <div>
+            <h2>Revolutionary Electric SUV Hits the Market</h2>
+            <p>A groundbreaking electric SUV was launched this week, boasting an impressive combination of power, luxury, and eco-conscious design. This model promises to appeal to a wider audience, marking a significant milestone in the evolution of electric vehicles.</p>
+            <p><a href="#">Read more</a></p>
+          </div>
+      </div>
+
+      <div class="news-article">
+          <img src="images/battery-tech-image.jpg" alt="Battery Technology">
+          <div>
+            <h2>Breakthrough in Battery Technology</h2>
+            <p>Scientists have made a major breakthrough in battery technology, potentially doubling the energy density of current lithium-ion batteries. This innovation could significantly extend the range of electric cars and accelerate the adoption of sustainable energy sources.</p>
+            <p><a href="#">Read more</a></p>
+          </div>
+      </div>
+      </section>
+      <section id="about">
+        <h2>About</h2>
+        <p>Welcome to our platform dedicated to reviewing and analyzing electric vehicles! We are passionate about the ever-evolving world of eco-friendly transportation and strive to provide a comprehensive resource for individuals seeking information on electric cars. Our mission is to empower consumers with unbiased, detailed, and insightful reviews to aid in making informed decisions about electric vehicle purchases.</p>
+
+    <p>Our team of dedicated experts and enthusiasts brings together a wealth of knowledge and experience to objectively assess a wide range of electric vehicles available in the market. We understand the significance of transitioning to sustainable transportation and recognize the pivotal role electric vehicles play in reducing carbon emissions and advancing a greener future.</p>
+
+    <p>At Electric Vehicle Reviews, we take pride in our commitment to thorough evaluations, considering various aspects of each vehicle. From performance and driving experience to range, charging infrastructure, technology features, and environmental impact, our reviews provide an in-depth analysis to guide consumers in selecting the most suitable electric vehicle for their needs.</p>
+
+    <p>Our platform aims to be a trusted companion for both seasoned electric car enthusiasts and those new to the world of electric vehicles. Whether you're considering your first electric car purchase or seeking to stay updated on the latest technological advancements in the industry, our reviews and articles are designed to cater to your interests.</p>
+
+    <p>With a dedication to honesty and accuracy, we present a platform that stands as a reliable source for those eager to contribute to a sustainable future through their vehicle choices. We believe in the transformative power of electric vehicles and strive to facilitate an informed community that shares our vision of a cleaner and more energy-efficient world.</p>
+
+    <p>Thank you for joining us on this journey of exploring and understanding the landscape of electric vehicles. Together, let's drive change and embrace the future of eco-conscious transportation!</p>
+      </section>
+    </section>
+    <aside>
+      <div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:240px; height:400px">
+        <canvas id="canvas" width="240" height="400"
+          style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+        <div id="dom_overlay_container"
+          style="pointer-events:none; overflow:hidden; width:240px; height:400px; position: absolute; left: 0px; top: 0px; display: block;">
+        </div>
+      </div>
+    </aside>
+  </main>
+  <footer>
+    &copy; 2023 by Christopher Maio
+  </footer>
+</body>
+
+</html>
