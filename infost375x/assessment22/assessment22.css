@@ -1,0 +1,12 @@
+#container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    row-gap: 50px;
+}
+#canvas1 {
+    outline: 3px solid #0000B3;
+}
+
+#canvas2 {
+    outline: 3px solid #C90000;
+}
